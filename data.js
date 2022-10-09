@@ -29,7 +29,7 @@ const data = {
       name: 'Into the void',
       slug: 'into-the-void',
       description:
-        "Glide into nothingness through the rabbit hole. It was a good movie but this is not a really good product, that is why we are charging you enough to subvert money's meaning",
+        "Glide into nothingness through the rabbit hole. Lets subvert money's meaning ransacking your wallet, is meaningless anyway!",
       price: 4995,
       vendor: 'No one',
       countInStock: 0,
