@@ -11,18 +11,6 @@ userRouter.get('/', (req, res) => {
   })
 })
 
-userRouter.post('/signin', (req, res, next) => {
-  User.findOne({ email: req.body.email })
-    .then(user => {
-      if (user && bcrypt.compareSync(req.body.password, user.password)) {
-        res.send(formatUser(user))
-        return
-      }
-      res.status(401).send({ err: true, message: 'Invalid email or password' })
-    })
-    .catch(err => next(err))
-})
-
 userRouter.post('/register', (req, res, next) => {
   User.findOne({ email: req.body.email })
     .then(user => {
@@ -37,14 +25,23 @@ userRouter.post('/register', (req, res, next) => {
         password: bcrypt.hashSync(req.body.password),
       })
       newUser.save().then(user => {
-        console.log(user)
         res.send(formatUser(user))
         return
       })
     })
     .catch(err => next(err))
 })
-
+userRouter.post('/signin', (req, res, next) => {
+  User.findOne({ email: req.body.email })
+    .then(user => {
+      if (user && bcrypt.compareSync(req.body.password, user.password)) {
+        res.send(formatUser(user))
+        return
+      }
+      res.status(401).send({ err: true, message: 'Invalid email or password' })
+    })
+    .catch(err => next(err))
+})
 function formatUser(user) {
   const { _id, __v, password, ...signedUser } = user.toObject()
   return {
