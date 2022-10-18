@@ -14,6 +14,7 @@ const port = process.env.PORT || 5000
 // Express App
 const app = express()
 app.use(cors())
+app.use('/api/checkout/webhook', express.raw({ type: '*/*' })) // --> Stripe webhook events need raw data and not parsed as json
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
