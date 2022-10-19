@@ -7,6 +7,7 @@ import userRouter from './routes/userRoutes.js'
 import seedRouter from './routes/seedRoutes.js'
 import stripeRouter from './routes/stripeRoutes.js'
 import handleError from './middlewares/handleError.js'
+import orderRouter from './routes/orderRoutes.js'
 
 dotenv.config()
 const port = process.env.PORT || 5000
@@ -38,6 +39,7 @@ app.use('/api/products', productRouter)
 app.use('/api/users', userRouter)
 app.use('/api/seeds', seedRouter)
 app.use('/api/checkout', stripeRouter)
+app.use('/api/orders', orderRouter)
 
 // Middleware
 app.use(handleError)
