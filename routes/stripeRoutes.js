@@ -5,9 +5,7 @@ import Order from '../models/Order.js'
 
 dotenv.config()
 
-const stripe = Stripe(
-  'sk_test_51LsSqiKkxdHzWXvLBGUfSVpJzir5Ynbeec6TviXn6GGhvNNUlcdDhoqhQejiUA5kdVmXYfsQL8QPkTUR0evnWy8y009wSbubCu',
-)
+const stripe = Stripe(process.env.STRIPE_KEY)
 const stripeRouter = express.Router()
 
 const clientUrl =
@@ -57,7 +55,10 @@ stripeRouter.post('/create-checkout-session', async (req, res) => {
 })
 
 //Stripe webhook: checkout succeed
-const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET
+const endpointSecret =
+  process.env.NODE_ENV === 'production'
+    ? process.env.STRIPE_WEBHOOK_SECRET_PROD
+    : process.env.STRIPE_WEBHOOK_SECRET_DEV
 
 function createOrder(data, customer, items) {
   function reducer(data, prop) {
@@ -94,10 +95,10 @@ function createOrder(data, customer, items) {
 
 stripeRouter.post(
   '/webhook',
-  express.raw({ type: 'application/json' }),
+  express.json({ type: 'application/json' }),
   (request, response) => {
     const sig = request.headers['stripe-signature']
-
+    console.log('fffff', sig)
     let event
 
     try {
