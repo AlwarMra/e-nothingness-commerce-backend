@@ -48,8 +48,8 @@ stripeRouter.post('/create-checkout-session', async (req, res) => {
     metadata: productIds,
     customer: customer.id,
     mode: 'payment',
-    success_url: `${clientUrl}checkout_success/?session_id={CHECKOUT_SESSION_ID}`,
-    cancel_url: `${clientUrl}cart/?checkout_cancel=true`,
+    success_url: `${clientUrl}checkout_success?session_id={CHECKOUT_SESSION_ID}`,
+    cancel_url: `${clientUrl}cart?checkout_cancel=true`,
   })
   res.send({ url: session.url })
 })
